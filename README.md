@@ -11,9 +11,13 @@ with the latest
 [form13fInfoTable.xml](https://www.sec.gov/Archives/edgar/data/1061768/000114036117007238/form13fInfoTable.xml).
 
 The R script `parse_13f.R` handles XML tables like the above.
-`example.R` uses it to parse Baupost's filings, perform some
+
+`example.R` uses it to parse Baupost's 2017 Q1 filings
+(also [here](./baupost-20170214-form13fInfoTable.xml)), dump the raw
+data to a CSV (see [here](./baupost_20170214_raw.csv)), perform some
 conversions with dplyr, order by percentage relative to the whole
-portfolio, and then output a CSV file containing the same.
+portfolio, and then output a CSV file containing this new dataframe
+(see [here](./baupost_20170214_holdings.csv)).
 
 ## To-do items
 
