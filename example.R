@@ -14,10 +14,15 @@ options("width"=200)
 xmlfile <- xmlParse("baupost-20170214-form13fInfoTable.xml")
 root <- xmlRoot(xmlfile)
 
+## Get raw data from 13F XML:
 baupost_df <- dataframe_13f(root)
+
+## Dump it to CSV & screen:
 print("Raw data:")
 print(baupost_df)
+write.csv(baupost_df, file="baupost_20170214_raw.csv", row.names=FALSE)
 
+## Process it a bit with dplyr, and write back out:
 holdings <- baupost_df %>%
     ## Parse numbers:
     mutate(valueUSD = 1000 * as.numeric(value),
@@ -25,11 +30,12 @@ holdings <- baupost_df %>%
            sharePrice = valueUSD / shares) %>%
     ## Get 'Percent' as the percent of the total portfolio:
     mutate(percent = 100 * valueUSD / sum(valueUSD)) %>%
+    ## Grab only certain columns:
     select(nameOfIssuer, cusip, valueUSD, percent, shares, sharePrice) %>%
+    ## And order by the percentage of the portfolio:
     arrange(desc(percent))
 
-write.csv(holdings, file="baupost_holding_20170214.csv", row.names=FALSE)
-
+write.csv(holdings, file="baupost_20170214_holdings.csv", row.names=FALSE)
 print("Processed data:")
 print(holdings)
 
