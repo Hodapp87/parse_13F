@@ -10,6 +10,26 @@ those from [Baupost](https://en.wikipedia.org/wiki/Baupost_Group)
 with the latest
 [form13fInfoTable.xml](https://www.sec.gov/Archives/edgar/data/1061768/000114036117007238/form13fInfoTable.xml).
 
-The R script handles XML tables like the above.
+The R script `parse_13f.R` handles XML tables like the above.
+`example.R` uses it to parse Baupost's filings, perform some
+conversions with dplyr, order by percentage relative to the whole
+portfolio, and then output a CSV file containing the same.
 
-The code is still in need of some organization...
+## To-do items
+
+- It might be nice to turn the CUSIP into a ticker symbol in order to
+  link the tables against other data sources. The
+  [FinancialInstrument](https://cran.r-project.org/package=FinancialInstrument) library
+  looks like it at least knows how to query online APIs for related
+  information, but I wasn't able to get anywhere.
+- I'd like to use the proper namespaces when finding nodes in the XML
+  with XPath rather than just telling it to ignore them, but I have no
+  idea what the namespaces are.
+
+## Disclaimer
+
+I'm not affiliated with Baupost, nor with any other party mentioned
+here, nor should anything I wrote above be taken as investment or
+financial advice, nor do I warrant that the code does anything it
+claims to.  I am not your lawyer.  I am not your financial advisor.  I
+am not responsible for what you do with money.
