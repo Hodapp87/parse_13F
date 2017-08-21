@@ -39,10 +39,23 @@ delta[is.na(delta)] <- 0
 delta <- delta %>%
     mutate(valueChange = valueUSD.y - valueUSD.x,
            sharesChange = shares.y - shares.x,
-           transEst = sharesChange * (sharePrice.y + sharePrice.x) / 2) %>%
+           transEst = sharesChange * (sharePrice.y + sharePrice.x) / 2,
+           note =
+               ifelse(
+                   shares.y == 0,
+                   "Sold all",
+                   ifelse(
+                       shares.x > 0,
+                       ifelse(
+                          sharesChange == 0,
+                          "",
+                          ifelse(sharesChange > 0,
+                              "Bought more",
+                              "Sold some")),
+                       "Bought new"))) %>%
     select(nameOfIssuer, cusip, valueUSD = valueUSD.y, percent = percent.y,
            shares = shares.y, sharePrice = sharePrice.y, valueChange,
-           sharesChange, transEst) %>%
+           sharesChange, transEst, note) %>%
     arrange(desc(percent))
 
 write.csv(delta, file=paste("baupost_", date2, "_changes.csv", sep=''),
@@ -58,9 +71,16 @@ print(sprintf("Total change in fund value (USD): $%s (%+.2f%%)",
               100 * (valDelta / value1)))
 
 trans <- summarise(delta, transEst = sum(transEst))$transEst
-print(sprintf("Estimated transactions: $%s",
+print(sprintf("Estimated net transactions: $%s",
               prettyNum(trans, big.mark=",", scientific=FALSE)))
 
-## This appears to get identical results to corresponding fields in
-## https://whalewisdom.com/filer/baupost-group-llc-ma#/tabholdings_tab_link
-## though I do not do anything with previous shares.
+pos <- delta %>%
+    filter(transEst > 0) %>%
+    summarise(transEst = sum(transEst))
+neg <- delta %>%
+    filter(transEst < 0) %>%
+    summarise(transEst = sum(transEst))
+print(sprintf("   Estimated bought: $%s",
+              prettyNum(pos$transEst, big.mark=",", scientific=FALSE)))
+print(sprintf("   Estimated sold: $%s",
+              prettyNum(-neg$transEst, big.mark=",", scientific=FALSE)))
