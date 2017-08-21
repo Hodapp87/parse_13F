@@ -22,10 +22,14 @@ portfolio, and then output a CSV file containing this new dataframe
 ## To-do items
 
 - It might be nice to turn the CUSIP into a ticker symbol in order to
-  link the tables against other data sources. The
+  link the tables against other data sources - for instance, the
+  present price. The
   [FinancialInstrument](https://cran.r-project.org/package=FinancialInstrument) library
   looks like it at least knows how to query online APIs for related
   information, but I wasn't able to get anywhere.
+    - https://investor.vanguard.com/search/ will search, as will
+      http://quotes.fidelity.com/ftgw/fbc/ofquotes/mmnet/SymLookup,
+      but I don't know about a free API.
 - I'd like to use the proper namespaces when finding nodes in the XML
   with XPath rather than just telling it to ignore them, but I have no
   idea what the namespaces are.

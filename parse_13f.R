@@ -17,7 +17,7 @@ txt <- function(name, h=NA) {
 ## filing.  Supply the document's XML root in 'xml_root' (from
 ## form13fInfoTable.xml).
 dataframe_13f <- function(xml_root) {
-    info <- getNodeSet(root, "//*[local-name() = 'infoTable']")
+    info <- getNodeSet(xml_root, "//*[local-name() = 'infoTable']")
 
     ## Turn the raw data into a dataframe:
     infotable <- data.frame(
