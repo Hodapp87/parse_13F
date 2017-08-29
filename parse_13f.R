@@ -32,4 +32,9 @@ dataframe_13f <- function(xml_root) {
         votingAuthorityNone   = as.numeric(vapply(info, txt("None", "votingAuthority"), c(""))),
         investmentDiscretion  = vapply(info, txt("investmentDiscretion"), c(""))
     )
+
+    infotable$nameOfIssuer <- as.character(infotable$nameOfIssuer)
+    infotable$cusip        <- as.character(infotable$cusip)
+
+    return(infotable)
 }

@@ -19,6 +19,14 @@ conversions with dplyr, order by percentage relative to the whole
 portfolio, and then output a CSV file containing this new dataframe
 (see [here](./baupost_20170214_holdings.csv)).
 
+`example2.R` parses adjacent quarterly filings and determines the
+likely portfolio changes between those two quarters.
+
+`example3.R` is basically a copy of `example.R` which parses a CSV
+exported from Fidelity (not included), and compares this portfolio to
+the 13F's contents (and determines the changes made to match the same
+ratios).
+
 ## To-do items
 
 - It might be nice to turn the CUSIP into a ticker symbol in order to
