@@ -1,7 +1,9 @@
 # parse_13F
 Some tools for parsing Form 13F filings with the SEC
 
-Thus far, this is just an R script that I wrote to parse
+## R code
+
+Thus far, this is just a small R module that I wrote to parse
 [13F](https://en.wikipedia.org/wiki/Form_13F) filings.  These are
 available as XML files from [EDGAR](https://www.sec.gov/edgar/searchedgar/companysearch.html).
 For instance, if you want to [ride Seth Klarmann's coattails](http://www.forbes.com/2010/02/24/enzon-facet-nws-markets-intelligent-investing-seth-klarman.html),
@@ -26,6 +28,13 @@ likely portfolio changes between those two quarters.
 exported from Fidelity (not included), and compares this portfolio to
 the 13F's contents (and determines the changes made to match the same
 ratios).
+
+## Python code
+
+The Python code is just a single source file at the moment, and mostly
+scratch work.  It depends on [Pandas](https://pandas.pydata.org/), and
+uses this and some built-in libraries to parse the XML and turn it to
+Pandas tables.
 
 ## To-do items
 
