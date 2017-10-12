@@ -1,0 +1,13 @@
+*.pyc
+*.o
+dist/
+build/
+*~
+_autosave-*.kicad_pcb
+*.kicad_pcb-bak
+.idea/
+.coverage
+*.egg-info
+*.so
+_build/
+venv/
