@@ -28,8 +28,8 @@ get_13f_holdings <- function(fname) {
     return(df)
 }
 
-date1 <- c("20170512")
-date2 <- c("20170811")
+date1 <- c("20201113")
+date2 <- c("20210212")
 df1 <- get_13f_holdings(paste("baupost-", date1, "-form13fInfoTable.xml", sep=""))
 df2 <- get_13f_holdings(paste("baupost-", date2, "-form13fInfoTable.xml", sep=""))
 
@@ -42,17 +42,14 @@ delta <- delta %>%
            transEst = sharesChange * (sharePrice.y + sharePrice.x) / 2,
            note =
                ifelse(
-                   shares.y == 0,
-                   "Sold all",
-                   ifelse(
-                       shares.x > 0,
-                       ifelse(
-                          sharesChange == 0,
-                          "",
-                          ifelse(sharesChange > 0,
-                              "Bought more",
-                              "Sold some")),
-                       "Bought new"))) %>%
+                   shares.x > 0,
+               ifelse(
+                   sharesChange == 0,
+                   "",
+               ifelse(sharesChange > 0,
+                      sprintf("Buy %.1f%%", 100 * sharesChange / shares.x),
+                      sprintf("Sell %.1f%%", -100 * sharesChange / shares.x))),
+               "Buy new")) %>%
     select(nameOfIssuer, cusip, valueUSD = valueUSD.y, percent = percent.y,
            shares = shares.y, sharePrice = sharePrice.y, valueChange,
            sharesChange, transEst, note) %>%
